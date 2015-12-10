@@ -4,7 +4,9 @@ using System.Collections.Generic;
 
 public class CrossingTest : MonoBehaviour {
 
-    public GameObject Point;   
+    public GameObject Point;
+    public List<GameObject> pointList;
+    public List<Vector2> pointList1;
     void OnTriggerEnter2D(Collider2D coll)
     {
         if (coll.tag != "Djoints")
@@ -20,6 +22,8 @@ public class CrossingTest : MonoBehaviour {
     {
         yield return new WaitForSeconds(1f);
         Destroy(Point.gameObject);
+        pointList.RemoveAt(1);
+        pointList1.RemoveAt(1);
         Destroy(gameObject);
 
     }

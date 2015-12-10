@@ -30,22 +30,20 @@ public class CreatHingeDjoint : MonoBehaviour
             CreatAll();
             crB = true;
         }
-        if (Input.GetMouseButtonUp(0) && points.ToArray().Length != 2 || points[1]==null)
+        if (Input.GetMouseButtonUp(0) && points.ToArray().Length < 2)
         {
 
             mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             pointsList.Add(mousePos);
-            points.Add((GameObject)Instantiate(pointSprite, mousePos, Quaternion.identity));            
+            points.Add((GameObject)Instantiate(pointSprite, mousePos, Quaternion.identity));
+            crossing = false;
         }
         if (points.ToArray().Length == 2 && crossing==false)
         {
             CrossingOther(points[0].transform.position, points[1].transform.position);
             
         }
-        if (points[1] == null)
-        {
-            crossing = false;
-        }
+        
     }
 
     public void PointAndDjoint(float leng, GameObject point1, GameObject point2)//Функция получает длину отрезка, первую и последнюю точки
@@ -131,6 +129,8 @@ public class CreatHingeDjoint : MonoBehaviour
         GameObject testInst=(GameObject)Instantiate(test, new Vector2(0,0), Quaternion.identity);
         CrossingTest testScr = testInst.GetComponent<CrossingTest>();
         testScr.Point = points[1];
+        testScr.pointList = points;
+        testScr.pointList1 = pointsList;
         EdgeCollider2D edge = testInst.gameObject.AddComponent<EdgeCollider2D>();
         edge.points = pointsList.ToArray();
         edge.isTrigger = true;
