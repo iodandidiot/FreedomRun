@@ -9,7 +9,7 @@ public class CrossingTest : MonoBehaviour {
     public List<Vector2> pointList1;
     void OnTriggerEnter2D(Collider2D coll)
     {
-        if (coll.tag != "Djoints")
+        if (coll.tag != "Djoints" && coll.tag != "bg_for_djoint")
         {
             SpriteRenderer colorPoint = Point.GetComponent<SpriteRenderer>();
             colorPoint.color = Color.red;

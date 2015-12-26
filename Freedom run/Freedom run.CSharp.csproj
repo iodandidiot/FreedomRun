@@ -74,6 +74,7 @@
     <Compile Include="Assets\CrossingTest.cs" />
     <Compile Include="Assets\Player.cs" />
     <Compile Include="Assets\buid_bridge.cs" />
+    <Compile Include="Assets\clickForDjoint.cs" />
     <Compile Include="Assets\move_Player.cs" />
     <Compile Include="Assets\reload.cs" />
   </ItemGroup>

@@ -24,25 +24,25 @@ public class CreatHingeDjoint : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.position =new Vector2(Camera.main.ScreenToWorldPoint(Input.mousePosition).x,Camera.main.ScreenToWorldPoint(Input.mousePosition).y);
-        if (start && !crB)
-        {
-            CreatAll();
-            crB = true;
-        }
-        if (Input.GetMouseButtonUp(0) && points.ToArray().Length < 2)
-        {
+        //transform.position =new Vector2(Camera.main.ScreenToWorldPoint(Input.mousePosition).x,Camera.main.ScreenToWorldPoint(Input.mousePosition).y);
+        //if (start && !crB)
+        //{
+        //    CreatAll();
+        //    crB = true;
+        //}
+        //if (Input.GetMouseButtonUp(0) && points.ToArray().Length < 2)
+        //{
 
-            mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            pointsList.Add(mousePos);
-            points.Add((GameObject)Instantiate(pointSprite, mousePos, Quaternion.identity));
-            crossing = false;
-        }
-        if (points.ToArray().Length == 2 && crossing==false)
-        {
-            CrossingOther(points[0].transform.position, points[1].transform.position);
+        //    mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        //    pointsList.Add(mousePos);
+        //    points.Add((GameObject)Instantiate(pointSprite, mousePos, Quaternion.identity));
+        //    crossing = false;
+        //}
+        //if (points.ToArray().Length == 2 && crossing==false)
+        //{
+        //    CrossingOther(points[0].transform.position, points[1].transform.position);
             
-        }
+        //}
         
     }
 
@@ -123,6 +123,23 @@ public class CreatHingeDjoint : MonoBehaviour
     //    float VectorProizv = (Mathf.Sqrt(Mathf.Pow(vector1.x, 2) + Mathf.Pow(vector1.y, 2) + (Mathf.Sqrt(Mathf.Pow(vector2.x, 2) + Mathf.Pow(vector2.y, 2)))));
     //    //RaycastHit2D hit = Physics2D.Raycast(fPoint, transform.up);
     //}
+
+    public void ClickToObj()
+    {
+        if (points.ToArray().Length < 2)
+        {
+
+            mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            pointsList.Add(mousePos);
+            points.Add((GameObject)Instantiate(pointSprite, mousePos, Quaternion.identity));
+            crossing = false;
+            if (points.ToArray().Length == 2)
+            {
+                CrossingOther(points[0].transform.position, points[1].transform.position);
+            }
+        }
+           
+    }
 
     void CrossingOther(Vector2 fPoint, Vector2 sPoint)
     {
