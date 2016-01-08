@@ -5,8 +5,8 @@ using System.Collections.Generic;
 public class CreatHingeDjoint : MonoBehaviour
 {
     public GameObject player;
-    public List<Vector2> pointsList;
-    public List<GameObject> points;
+    public List<Vector2> pointsList=new List<Vector2>();    
+    public List<GameObject> points=new List<GameObject>();
     private Vector2 mousePos;
     public GameObject creatBridge;
     public bool crB;
@@ -15,34 +15,17 @@ public class CreatHingeDjoint : MonoBehaviour
     public bool start = false;
     public GameObject test;
     public bool crossing=false;
+    GameObject testInst;
     // Use this for initialization
     void Start()
     {
-
+        pointsList.Capacity = 0;
+        points.Capacity = 0;
     }
 
     // Update is called once per frame
     void Update()
     {
-        //transform.position =new Vector2(Camera.main.ScreenToWorldPoint(Input.mousePosition).x,Camera.main.ScreenToWorldPoint(Input.mousePosition).y);
-        //if (start && !crB)
-        //{
-        //    CreatAll();
-        //    crB = true;
-        //}
-        //if (Input.GetMouseButtonUp(0) && points.ToArray().Length < 2)
-        //{
-
-        //    mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        //    pointsList.Add(mousePos);
-        //    points.Add((GameObject)Instantiate(pointSprite, mousePos, Quaternion.identity));
-        //    crossing = false;
-        //}
-        //if (points.ToArray().Length == 2 && crossing==false)
-        //{
-        //    CrossingOther(points[0].transform.position, points[1].transform.position);
-            
-        //}
         
     }
 
@@ -113,16 +96,6 @@ public class CreatHingeDjoint : MonoBehaviour
         start = true;
     }
 
-    //void CrossingOther(Vector2 fPoint, Vector2 sPoint)
-    //{
-    //    Vector2 vector1 = new Vector2(fPoint.x - sPoint.x, fPoint.y - sPoint.y);
-    //    Vector2 vector2 = new Vector2(fPoint.x - sPoint.x, fPoint.y - fPoint.y);
-    //    float angle = /*Mathf.Rad2Deg*/Mathf.Acos((vector1.x * vector2.x + vector1.y * vector2.y) / (Mathf.Sqrt(Mathf.Pow(vector1.x, 2) + Mathf.Pow(vector1.y, 2)
-    //        +(Mathf.Sqrt(Mathf.Pow(vector2.x,2)+Mathf.Pow(vector2.y,2))))));
-    //    float ScalarProizv = (vector1.x * vector2.x + vector1.y * vector2.y);
-    //    float VectorProizv = (Mathf.Sqrt(Mathf.Pow(vector1.x, 2) + Mathf.Pow(vector1.y, 2) + (Mathf.Sqrt(Mathf.Pow(vector2.x, 2) + Mathf.Pow(vector2.y, 2)))));
-    //    //RaycastHit2D hit = Physics2D.Raycast(fPoint, transform.up);
-    //}
 
     public void ClickToObj()
     {
@@ -132,18 +105,18 @@ public class CreatHingeDjoint : MonoBehaviour
             mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             pointsList.Add(mousePos);
             points.Add((GameObject)Instantiate(pointSprite, mousePos, Quaternion.identity));
-            crossing = false;
-            if (points.ToArray().Length == 2)
-            {
-                CrossingOther(points[0].transform.position, points[1].transform.position);
-            }
+            crossing = false;  
+          
         }
-           
+        if (points.ToArray().Length == 2)
+        {
+            CrossingOther(points[0].transform.position, points[1].transform.position);
+        }   
     }
 
     void CrossingOther(Vector2 fPoint, Vector2 sPoint)
     {
-        GameObject testInst=(GameObject)Instantiate(test, new Vector2(0,0), Quaternion.identity);
+        testInst=(GameObject)Instantiate(test, new Vector2(0,0), Quaternion.identity);
         CrossingTest testScr = testInst.GetComponent<CrossingTest>();
         testScr.Point = points[1];
         testScr.pointList = points;
@@ -154,5 +127,25 @@ public class CreatHingeDjoint : MonoBehaviour
         Rigidbody2D fiz = testInst.gameObject.AddComponent<Rigidbody2D>();
         fiz.isKinematic = true;
         crossing = true;
+        StartCoroutine("BuildDjoints");
+
     }
+
+    IEnumerator BuildDjoints()
+    {
+        yield return new WaitForSeconds(1.1f);
+        if (points[1]!=null) 
+        {
+            float leng;
+            leng = Mathf.Sqrt(Mathf.Pow((points[0].transform.position.x - points[1].transform.position.x), 2) +
+                    Mathf.Pow((points[0].transform.position.y - points[1].transform.position.y), 2));
+            PointAndDjoint(leng, points[0], points[1]);
+            Destroy(testInst);
+            pointsList.RemoveRange(0, 2);
+            points.RemoveRange(0, 2);
+        }
+        
+        
+    }
+    
 }

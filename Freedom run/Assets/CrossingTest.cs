@@ -2,7 +2,8 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class CrossingTest : MonoBehaviour {
+public class CrossingTest : MonoBehaviour
+{
 
     public GameObject Point;
     public List<GameObject> pointList;
@@ -15,12 +16,12 @@ public class CrossingTest : MonoBehaviour {
             colorPoint.color = Color.red;
             StartCoroutine("DeletePoint");
         }
-        
+
     }
 
     IEnumerator DeletePoint()
     {
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.5f);
         Destroy(Point.gameObject);
         pointList.RemoveAt(1);
         pointList1.RemoveAt(1);

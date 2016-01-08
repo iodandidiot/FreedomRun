@@ -3,10 +3,13 @@ using System.Collections;
 
 public class clickForDjoint : MonoBehaviour {
 
-    public CreatHingeDjoint hinge;
+    GameObject djoints;
 
     void OnMouseDown() 
     {
-        hinge.ClickToObj();
+        djoints = GameObject.Find("HingeDjoint");
+        CreatHingeDjoint createDjoints = djoints.GetComponent<CreatHingeDjoint>();
+
+        createDjoints.ClickToObj();
     } 
 }
